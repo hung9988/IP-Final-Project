@@ -83,6 +83,9 @@ class NetworkTopo(Topo):
         pc2 = self.addHost('pc2', ip='192.168.2.2/24', defaultRoute='via 192.168.2.1')
         pc3 = self.addHost('pc3', ip='192.168.3.2/24', defaultRoute='via 192.168.3.1')
         pc4 = self.addHost('pc4', ip='192.168.4.2/24', defaultRoute='via 192.168.4.1')
+        
+        # TV Server for multicast IPTV service (connected to R5 in Tier 1)
+        tv_server = self.addHost('tv_server', ip='10.100.5.10/24', defaultRoute='via 10.100.5.1')
 
         # ISP #1 internal links (RIP)
         # R1 - R2: 10.0.1.0/24
@@ -150,3 +153,7 @@ class NetworkTopo(Topo):
         # PC4 - R9: 192.168.4.0/24
         self.addLink(pc4, r9,
                      intfName2='r9-eth1', params2={'ip': '192.168.4.1/24'})
+        
+        # TV Server - R5: 10.100.5.0/24 (for multicast IPTV)
+        self.addLink(tv_server, r5,
+                     intfName2='r5-eth2', params2={'ip': '10.100.5.1/24'})
